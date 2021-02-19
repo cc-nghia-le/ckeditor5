@@ -30,6 +30,8 @@ import Table from '@ckeditor/ckeditor5-table/src/table';
 import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
 import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformation';
 import CloudServices from '@ckeditor/ckeditor5-cloud-services/src/cloudservices';
+import ButtonView from '@ckeditor/ckeditor5-ui/src/button/buttonview';
+import RemoveFormat from '@ckeditor/ckeditor5-remove-format/src/removeformat';
 
 export default class ClassicEditor extends ClassicEditorBase {}
 
@@ -58,45 +60,80 @@ ClassicEditor.builtinPlugins = [
 	PasteFromOffice,
 	Table,
 	TableToolbar,
-	TextTransformation
+	TextTransformation,
+	ClipboardButtons,
+	RemoveFormat,
+	RemoveFormatLinks
 ];
+
+function RemoveFormatLinks( editor ) {
+    // Extend the editor schema and mark the "linkHref" model attribute as formatting.
+    editor.model.schema.setAttributeProperties( 'linkHref', {
+        isFormatting: true
+    } );
+}
+
+function ClipboardButtons( editor ) {
+    addButton( 'copy', 'Copy' );
+    addButton( 'cut', 'Cut' );
+
+    function addButton( action, label ) {
+        editor.ui.componentFactory.add( action, locale => {
+            const view = new ButtonView( locale );
+
+            view.set( {
+                label: label,
+                // Or use the 'icon' property.
+                withText: true,
+                tooltip: true
+            } );
+
+            view.on( 'execute', () => {
+				document.execCommand( action );
+            } );
+
+            return view;
+        } );
+    }
+}
 
 // Editor configuration.
 ClassicEditor.defaultConfig = {
 	toolbar: {
 		items: [
+			// https://alpha20.careercross.com/en/job/add
+			// https://alpha20.careercross.com/en/company/edit
+			'bold',
+			'|',
+			'numberedList',
+			'bulletedList',
+			'|',
+			'cut',
+			'copy',
+			'|',
+			'undo',
+			'redo',
+			'|',
+			'removeFormat',
+			'|', // https://alpha20.careercross.com/en/company-feature/edit/22580
 			'heading',
 			'|',
 			'bold',
 			'italic',
-			'link',
-			'bulletedList',
+			'|',
 			'numberedList',
+			'bulletedList',
 			'|',
-			'indent',
-			'outdent',
+			'cut',
+			'copy',
 			'|',
-			'uploadImage',
-			'blockQuote',
-			'insertTable',
-			'mediaEmbed',
 			'undo',
-			'redo'
-		]
-	},
-	image: {
-		toolbar: [
-			'imageStyle:full',
-			'imageStyle:side',
+			'redo',
 			'|',
-			'imageTextAlternative'
-		]
-	},
-	table: {
-		contentToolbar: [
-			'tableColumn',
-			'tableRow',
-			'mergeTableCells'
+			'removeFormat',
+			'|', // https://alpha20.crm2.careercross.com/en/campaign-content/add/2201?lang=en
+			
+			
 		]
 	},
 	// This value must be kept in sync with the language defined in webpack.config.js.
