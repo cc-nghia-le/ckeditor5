@@ -11,6 +11,10 @@ import UploadAdapter from '@ckeditor/ckeditor5-adapter-ckfinder/src/uploadadapte
 import Autoformat from '@ckeditor/ckeditor5-autoformat/src/autoformat';
 import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
 import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
+import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline';
+import Strikethrough from '@ckeditor/ckeditor5-basic-styles/src/strikethrough';
+import Subscript from '@ckeditor/ckeditor5-basic-styles/src/subscript';
+import Superscript from '@ckeditor/ckeditor5-basic-styles/src/superscript';
 import BlockQuote from '@ckeditor/ckeditor5-block-quote/src/blockquote';
 import CKFinder from '@ckeditor/ckeditor5-ckfinder/src/ckfinder';
 import EasyImage from '@ckeditor/ckeditor5-easy-image/src/easyimage';
@@ -21,6 +25,7 @@ import ImageStyle from '@ckeditor/ckeditor5-image/src/imagestyle';
 import ImageToolbar from '@ckeditor/ckeditor5-image/src/imagetoolbar';
 import ImageUpload from '@ckeditor/ckeditor5-image/src/imageupload';
 import Indent from '@ckeditor/ckeditor5-indent/src/indent';
+import IndentBlock from '@ckeditor/ckeditor5-indent/src/indentblock';
 import Link from '@ckeditor/ckeditor5-link/src/link';
 import List from '@ckeditor/ckeditor5-list/src/list';
 import MediaEmbed from '@ckeditor/ckeditor5-media-embed/src/mediaembed';
@@ -32,6 +37,8 @@ import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformatio
 import CloudServices from '@ckeditor/ckeditor5-cloud-services/src/cloudservices';
 import ButtonView from '@ckeditor/ckeditor5-ui/src/button/buttonview';
 import RemoveFormat from '@ckeditor/ckeditor5-remove-format/src/removeformat';
+import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment';
+import Font from '@ckeditor/ckeditor5-font/src/font';
 
 export default class ClassicEditor extends ClassicEditorBase {}
 
@@ -42,6 +49,10 @@ ClassicEditor.builtinPlugins = [
 	Autoformat,
 	Bold,
 	Italic,
+	Underline,
+	Strikethrough,
+	Subscript,
+	Superscript,
 	BlockQuote,
 	CKFinder,
 	CloudServices,
@@ -53,6 +64,7 @@ ClassicEditor.builtinPlugins = [
 	ImageToolbar,
 	ImageUpload,
 	Indent,
+	IndentBlock,
 	Link,
 	List,
 	MediaEmbed,
@@ -63,7 +75,9 @@ ClassicEditor.builtinPlugins = [
 	TextTransformation,
 	ClipboardButtons,
 	RemoveFormat,
-	RemoveFormatLinks
+	RemoveFormatLinks,
+	Alignment,
+	Font
 ];
 
 function RemoveFormatLinks( editor ) {
@@ -132,8 +146,16 @@ ClassicEditor.defaultConfig = {
 			'|',
 			'removeFormat',
 			'|', // https://alpha20.crm2.careercross.com/en/campaign-content/add/2201?lang=en
-			
-			
+			'outdent',
+			'indent',
+			'blockQuote',
+			'link',
+			'alignment',
+			'fontColor',
+			'underline',
+			'strikethrough',
+			'subscript',
+			'superscript'
 		]
 	},
 	// This value must be kept in sync with the language defined in webpack.config.js.
